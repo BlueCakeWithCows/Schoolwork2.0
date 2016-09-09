@@ -3,14 +3,21 @@ package research.working;
 public class Value {
 	public String name;
 
-	public double value;
+	public Double value;
+
+	public Value(Double double1) {
+		this.value = double1;
+	}
+
 	public boolean getBoolean() {
+		if (value == null)
+			return false;
 		if (value > 0)
 			return true;
 		return false;
 	}
 
-	public double getDouble() {
+	public Double getDouble() {
 		return value;
 	}
 }

@@ -1,9 +1,10 @@
 package research.working;
 
 public class Operator {
-	public static final int OR = 0, ADD = 1, SUB = 2, MULTIPLY = 3, DIVIDE = 4, GREATER = 5, LESSER = 6, EQUAL = 7;
+	public static final int OR = 0, ADD = 1, SUB = 2, MULTIPLY = 3, DIVIDE = 4, GREATER = 5, LESSER = 6, EQUAL = 7,
+			SET = 8;
 
-	public static double doOperation(int operator, Value val1, Value val2) {
+	public static Double doOperation(int operator, Value val1, Value val2) {
 		switch (operator) {
 		case ADD:
 			return val1.getDouble() + val2.getDouble();
@@ -15,22 +16,28 @@ public class Operator {
 			return val1.getDouble() * val2.getDouble();
 		case GREATER:
 			if (val1.getDouble() > val2.getDouble())
-				return 1;
-			return -1;
+				return 1d;
+			return -1d;
 		case LESSER:
 			if (val1.getDouble() < val2.getDouble())
-				return 1;
-			return -1;
+				return 1d;
+			return -1d;
 		case EQUAL:
 			if (val1.getDouble() == val2.getDouble())
-				return 1;
-			return -1;
+				return 1d;
+			return -1d;
 		case OR:
 			if (val1.getBoolean() || val2.getBoolean())
-				return 1;
-			return -1;
+				return 1d;
+			return -1d;
+		case SET:
+			return val1.getDouble();
 		}
-		return 0;
+		return null;
+	}
+
+	public static final int getRange() {
+		return 9;
 	}
 
 }

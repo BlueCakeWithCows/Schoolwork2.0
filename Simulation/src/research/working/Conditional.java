@@ -5,13 +5,11 @@ public class Conditional extends Point {
 	public boolean NOT;
 	public Tree subTree;
 
-	public Conditional() {
-
-	}
 
 	public Conditional(String variable, boolean NOT) {
 		this.variable = variable;
 		this.NOT = NOT;
+		subTree = new Tree();
 	}
 
 	private boolean test(Value value) {
