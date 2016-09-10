@@ -1,15 +1,24 @@
 package research.working;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Conditional extends Point {
 	public String variable;
 	public boolean NOT;
-	public Tree subTree;
-
+	public List<Point> points;
 
 	public Conditional(String variable, boolean NOT) {
 		this.variable = variable;
 		this.NOT = NOT;
-		subTree = new Tree();
+		points = new ArrayList<Point>();
+	}
+
+	public Conditional(Conditional nP) {
+		this.variable = nP.variable;
+		this.NOT = nP.NOT;
+		points = new ArrayList<Point>();
+		points.addAll(nP.points);
 	}
 
 	private boolean test(Value value) {
@@ -26,16 +35,21 @@ public class Conditional extends Point {
 	}
 
 	private void run(Tree tree) {
-		subTree.simulate(tree);
+		for (Point p : points) {
+			p.compute(tree);
+		}
 	}
-
 	@Override
 	public String toString() {
-		String ret = "IF " + variable + "IS " + !NOT + " THEN";
-		String[] split = subTree.toString().split(System.lineSeparator());
-		for (String stuff : split) {
-			ret += System.lineSeparator() + "\t" + stuff;
+		String ret = "IF " + variable + " IS " + !NOT + " THEN: " +points.size();
+		StringBuilder s = new StringBuilder();
+		s.append(ret+System.lineSeparator());
+		for (Point p : points) {
+			String[] split = p.toString().split(System.lineSeparator());
+			for(String so:split){
+				s.append("  "+so + System.lineSeparator());
+			}
 		}
-		return ret;
+		return s.toString().trim();
 	}
 }

@@ -1,24 +1,58 @@
 package research;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.Scanner;
+
 import research.working.Conditional;
+import research.working.Mutator;
 import research.working.Node;
 import research.working.Operator;
 import research.working.Point;
 import research.working.Tree;
 
 public class Alg {
-	public static void main(String[] args) {
-		Tree tree = new Tree(2, 1);
-		tree.addPoint(new Node("out0", Operator.ADD, "in0", "in1"));
-		Conditional c = new Conditional("in0", false);
-		c.subTree.addPoint(new Node("out0", Operator.SET, "in0", "in1"));
-		tree.addPoint(c);
+	private SecureRandom random;
+	private Manager manager;
+	private String url = "Cases/Test";
+	public static Alg main;
 
-		double[] test = { 3d, 2d };
+	public Alg() throws IOException {
+		double prob = 1d/0d;
+		CaseReader reader = new CaseReader(new File(url));
+		random = new SecureRandom();
+		random.setSeed(54555);
+		manager = new Manager(random, .1d, reader.getTestCases(), 3, 1, 1000,.1);
 
-		Double[] out = tree.execute(test);
-		for (Double o : out) {
-			System.out.println(o);
+	}
+
+	public void start() {
+		manager.generatePopulation(3, 10);
+		manager.scorePopulation();
+		Scanner scanner = new Scanner(System.in);
+		int input;
+		while (true) {
+			System.out.println("Show Top?");
+			input = Integer.valueOf(scanner.nextLine());
+			List<Tree> trees = manager.getBest(input);
+			for (Tree tree : trees) {
+				System.out.println(tree + System.lineSeparator() + System.lineSeparator());
+			}
+			System.out.println("Do how many generations?");
+			input = Integer.valueOf(scanner.nextLine());
+			for (int i = 0; i < input; i++) {
+				manager.doGeneration();
+			}
+			
+
 		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		main = new Alg();
+		main.start();
+
 	}
 }

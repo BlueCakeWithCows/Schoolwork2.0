@@ -39,5 +39,28 @@ public class Operator {
 	public static final int getRange() {
 		return 9;
 	}
+	public static String getOperator(int operator) {
+		switch (operator) {
+		case ADD:
+			return "+";
+		case SUB:
+			return "-";
+		case DIVIDE:
+			return "/";
+		case MULTIPLY:
+			return "*";
+		case GREATER:
+			return ">";
+		case LESSER:
+			return "<";
+		case EQUAL:
+			return "==";
+		case OR:
+			return "||";
+		case SET:
+			return "SET";
+		}
+		return null;
+	}
 
 }

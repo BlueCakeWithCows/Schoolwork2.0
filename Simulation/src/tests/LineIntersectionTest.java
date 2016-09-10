@@ -9,15 +9,7 @@ public class LineIntersectionTest {
 
 	public static void main(String[] args) {
 		generateTestSuite();
-		// Test("Identical Line Inverse", new Line(0, 0, 500, 500), new
-		// Line(500, 500, 0, 0));
-		// Test("Identical Line", new Line(500, 500, 500, 500), new Line(500,
-		// 500, 0, 0));
-		// Test("Perpendicular Line", new Line(0, 500, 0, 0), new Line(-200,
-		// 400, 200, 200));
-		// Test("Perpendicular Line", new Line(0, 500, 0, 0), new Line(-200,
-		// 400, 200, 200));
-		// }
+
 	}
 
 	public static void Test(String desc, Line one, Line two) {
@@ -26,21 +18,20 @@ public class LineIntersectionTest {
 	}
 
 	public static void generateTestSuite() {
-		Random r = new Random(555);
-		for (int i = 0; i < 500; i++) {
-			double scale = r.nextDouble() * 100;
-			double x = scale * r.nextDouble();
-			double y = scale * r.nextDouble();
-			double x2 = scale * r.nextDouble();
-			double y2 = scale * r.nextDouble();
-			double xB = scale * r.nextDouble();
-			double yB = scale * r.nextDouble();
-			double x2B = scale * r.nextDouble();
-			double y2B = scale * r.nextDouble();
-			boolean intersects = GeometryUtilities.intersects(x, y, x2, y2, xB, yB, x2B, y2B);
-			String out = x + "," + y + "," + x2 + "," + y2 + "," + xB + "," + yB + "," + x2B + "," + y2B + ":"
-					+ intersects;
-			System.out.println(out);
+		Random rand = new Random(2222);
+		for (int i = 0; i < 100; i++) {
+			StringBuilder sb = new StringBuilder();
+			double[] arg1 = new double[3];
+			for (int i2 = 0; i2 < arg1.length; i2++) {
+				arg1[i2] = rand.nextDouble() * 30;
+				sb.append("," + arg1[i2]);
+
+			}
+			sb.deleteCharAt(0);
+			double out = arg1[0] + arg1[1] * arg1[2];
+			sb.append(":");
+			sb.append(out);
+			System.out.println(sb.toString());
 		}
 	}
 }

@@ -7,9 +7,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Tree {
-
-	private static final int inp = 0;
-	private ArrayList<Point> points;
+	public double score;
+	private List<Point> points;
 	private HashMap<String, Double> variables;
 	private HashMap<String, Double> values;
 	private HashMap<String, Double> constants;
@@ -18,7 +17,7 @@ public class Tree {
 	public Double[] outputs;
 
 	public Tree(int inp, int out) {
-		this();
+		points = new ArrayList<Point>();
 		outputSize = out;
 		this.inputSize = inp;
 		variables = new HashMap<String, Double>();
@@ -26,18 +25,15 @@ public class Tree {
 		constants = new HashMap<String, Double>();
 	}
 
-	public Tree() {
-		points = new ArrayList<Point>();
-	}
-
 	public Double[] execute(double[] inputs) {
 		values.clear();
 		variables.clear();
 		outputs = new Double[outputSize];
-		
+
 		for (int i = 0; i < inputs.length; i++)
-			values.put(formatInput(i), inputs[i]);;
-		
+			values.put(formatInput(i), inputs[i]);
+		;
+
 		for (int i = 0; i < outputs.length; i++)
 			variables.put(formatOut(i), outputs[i]);
 
@@ -59,21 +55,22 @@ public class Tree {
 		}
 	}
 
-	public Set<String> getDefaultNames(){
-		Set<String> list = new TreeSet<String>();
-		list.addAll(constants.keySet());
-		for (int i = 0; i < inp; i++)
+	public ArrayList<String> getDefaultNames() {
+		ArrayList<String> list = new ArrayList<String>();
+		if (constants.keySet().size() > 0)
+			list.addAll(constants.keySet());
+		for (int i = 0; i < inputSize; i++)
 			list.add(formatInput(i));
 		return list;
 	}
-	
-	public Set<String> getDefaultVariables(){
-		Set<String> list = new TreeSet<String>();
+
+	public ArrayList<String> getDefaultVariables() {
+		ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < outputSize; i++)
 			list.add(formatOut(i));
 		return list;
 	}
-	
+
 	public void addPoint(Point point) {
 		this.addPoint(point, points.size());
 	}
@@ -88,7 +85,7 @@ public class Tree {
 			if (index + 1 != points.size()) {
 				Point p = points.get(index + 1);
 				points.remove(index + 1);
-				((Conditional) point).subTree.addPoint(p);
+				((Conditional) point).points.add(p);
 			}
 		}
 	}
@@ -108,7 +105,21 @@ public class Tree {
 		return "in" + i;
 	}
 
-	public ArrayList getPoints() {
+	public List<Point> getPoints() {
 		return this.points;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append("Score: " + score+System.lineSeparator());
+		for (Point p : points) {
+			s.append(p.toString() + System.lineSeparator());
+		}
+		return s.toString().trim();
+	}
+
+	public void setPoints(List<Point> points2) {
+		this.points = points2;
 	}
 }
